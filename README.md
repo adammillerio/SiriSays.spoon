@@ -11,6 +11,19 @@ This function is implemented as a "macro" which performs the following steps via
 * Auto close focuses the window from before TTS prompt then clicks the center
   * Will not occur if prompt is already unfocused
 
+To enable Type-to-Siri, set the following Settings on your macOS machine:
+* Accessibility
+    * Type to Siri
+        * On
+* Siri & Spotlight
+    * Siri Responses
+        * Voice Feedback
+            * Off
+        * Always show Siri captions
+            * On
+        * Keyboard Shortcut
+            * Press Fn (Globe) Space
+
 # Installation
 
 SiriSays can be automatically installed from my [Spoon Repository](https://github.com/adammillerio/Spoons) via [SpoonInstall](https://www.hammerspoon.org/Spoons/SpoonInstall.html). See the repository README or the SpoonInstall docs for more information.
