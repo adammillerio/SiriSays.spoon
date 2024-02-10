@@ -144,6 +144,8 @@ end
 ---        * Keyboard Shortcut
 ---          * Press Fn (Globe) Space
 function SiriSays:siri(prompt)
+    self.logger.vf("Sending Siri prompt: %s", prompt)
+
     self.previouslyFocusedWindow = hs.window.focusedWindow()
     self.logger.vf("Stored previously focused window: %s",
                    self.previouslyFocusedWindow)
@@ -158,6 +160,35 @@ function SiriSays:siri(prompt)
     hs.eventtap.keyStroke({"fn"}, "space")
 
     self.typeToSiriOpenTimer:start()
+end
+
+--- SiriSays:siri_cli(args)
+--- Method
+--- Initiate a siri prompt from the Hammerspoon CLI.
+---
+--- Parameters:
+---  * args - Args provided to hs CLI after "--" via _cli.args.
+---
+--- Returns:
+---  * None
+---
+--- Notes:
+---  * This is intended to be invoked via the Hammerspoon CLI with the prompt after --
+---  * ie `alias siri='hs -c "spoon.SiriSays:siri_cli(_cli.args)" --'`
+function SiriSays:siri_cli(args)
+    self.logger.v("Starting SiriSays CLI invocation")
+
+    if args[1] ~= "--" then
+        -- CLI was not invoked with -- at the end.
+        self.logger.e("SiriSays:siri_cli must be invoked via hs CLI with --")
+        return
+    end
+
+    -- Remove first -- argument
+    table.remove(args, 1)
+
+    -- Join all arguments after -- and send them as a prompt to siri.
+    self:siri(table.concat(args, " "))
 end
 
 function SiriSays:start()
